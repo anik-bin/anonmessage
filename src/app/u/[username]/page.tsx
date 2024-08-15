@@ -32,7 +32,7 @@ const parseStringMessages = (messageString: string): string[] => {
 };
 
 
-const sendMessage = () => {
+const SendMessage = () => {
 
   const [isLoading, setIsLoading] = useState(false)
   const params = useParams<{ username: string }>();
@@ -182,4 +182,4 @@ const sendMessage = () => {
   )
 }
 
-export default sendMessage
+export default SendMessage

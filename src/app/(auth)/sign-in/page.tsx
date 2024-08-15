@@ -20,7 +20,7 @@ import { Button } from "@/components/ui/button"
 import { signInSchema } from "@/schemas/signinSchema"
 import { signIn } from "next-auth/react"
 
-const signInPage = () => {
+const SignInPage = () => {
 
   const { toast } = useToast()
   const router = useRouter()
@@ -124,4 +124,4 @@ const signInPage = () => {
   )
 }
 
-export default signInPage
+export default SignInPage
