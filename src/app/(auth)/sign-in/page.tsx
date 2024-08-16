@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import Link from "next/link"
-// import { useState } from "react"
+import { useState } from "react"
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
 import {
@@ -16,11 +16,13 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-// import { Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import { signInSchema } from "@/schemas/signinSchema"
 import { signIn } from "next-auth/react"
 
 const SignInPage = () => {
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const { toast } = useToast()
   const router = useRouter()
@@ -32,34 +34,37 @@ const SignInPage = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
+    setIsSubmitting(true)
 
-    const result = await signIn("credentials", {
-      redirect: false,
-      identifier: data.identifier,
-      password: data.password
-    })
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        identifier: data.identifier,
+        password: data.password
+      });
 
-    // console.log(result);
+      if (result?.error) {
+        toast({
+          title: "Login failed",
+          description: "Incorrect username or password",
+          variant: "destructive"
+        });
+      }
 
-    if (result?.error) {
+      if (result?.url) {
+        router.replace("/dashboard");
+      }
+    } catch (error) {
+      // console.error("Error during sign-in:", error);
       toast({
-        title: "Login failed",
-        description: "Incorrect username or password",
+        title: "An error occurred",
+        description: "Something went wrong. Please try again.",
         variant: "destructive"
-      })
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-
-    if (result?.url) {
-      router.replace("/dashboard")
-    }
-
-    // if (result?.url) {
-    //   console.log("Redirecting to:", result.url); // Debugging: check the URL
-    //   router.push("/dashboard");
-    // } else {
-    //   console.log("No URL returned, result:", result); // Debugging: check the result
-    // }
-  }
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -107,8 +112,11 @@ const SignInPage = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit">
-              Login
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ?
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait
+                </> : "Login"}
             </Button>
           </form>
         </Form>
