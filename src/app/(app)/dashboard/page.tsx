@@ -134,49 +134,52 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl">
-      <h1 className="text-4xl font-bold mb-4">User Dashboard</h1>
+    <div className="my-8 mx-auto md:mx-6 lg:mx-auto p-4 md:p-6 bg-white rounded w-full max-w-md md:max-w-6xl overflow-x-hidden">
+      <h1 className="text-3xl sm:text-4xl font-bold mb-4 text-center md:text-left">User Dashboard</h1>
 
       <div className="mb-4">
-        <h2 className="text-lg font-semibold mb-2">Copy Your Unique Link</h2>{' '}
-        <div className="flex items-center">
+        <h2 className="text-lg font-semibold mb-2 text-center sm:text-left">Copy Your Unique Link</h2>
+        <div className="flex flex-col sm:flex-row items-center">
           <input
             type="text"
             value={profileUrl}
             disabled
-            className="input input-bordered w-full p-2 mr-2"
+            className="input input-bordered w-full p-2 mb-2 sm:mb-0 sm:flex-grow"
           />
-          <Button onClick={copyToClipboard}>Copy</Button>
+          <Button className="w-full sm:w-auto sm:ml-2" onClick={copyToClipboard}>Copy</Button>
         </div>
       </div>
 
-      <div className="mb-4">
+      <div className="mb-4 flex flex-col sm:flex-row items-center">
         <Switch
           {...register('acceptMessages')}
           checked={acceptMessages}
           onCheckedChange={handleSwitchChange}
           disabled={isSwitchLoading}
         />
-        <span className="ml-2">
+        <span className="ml-2 mt-2 sm:mt-0">
           Accept Messages: {acceptMessages ? 'On' : 'Off'}
         </span>
       </div>
       <Separator />
 
-      <Button
-        className="mt-4"
-        variant="outline"
-        onClick={(e) => {
-          e.preventDefault();
-          fetchMessages(true);
-        }}
-      >
-        {isLoading ? (
-          <Loader2 className="h-4 w-4 animate-spin" />
-        ) : (
-          <RefreshCcw className="h-4 w-4" />
-        )}
-      </Button>
+      <div className="mt-4 flex sm:justify-start justify-center">
+        <Button
+          className="w-full sm:w-auto"
+          variant="outline"
+          onClick={(e) => {
+            e.preventDefault();
+            fetchMessages(true);
+          }}
+        >
+          {isLoading ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : (
+            <RefreshCcw className="h-4 w-4" />
+          )}
+        </Button>
+      </div>
+
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
         {messages.length > 0 ? (
           messages.map((message, index) => (
@@ -187,7 +190,7 @@ const Dashboard = () => {
             />
           ))
         ) : (
-          <p>No messages to display.</p>
+          <p className="text-center">No messages to display.</p>
         )}
       </div>
     </div>

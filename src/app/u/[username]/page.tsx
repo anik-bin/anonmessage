@@ -22,6 +22,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import Link from 'next/link';
 
 const specialChar = '|';
 
@@ -145,10 +147,10 @@ const SendMessage = () => {
       </Form>
 
       <div className='space-y-4 my-8'>
-        <div className='space-y-2'>
+        <div className='space-y-2 text-center sm:text-left'>
           <Button
             onClick={fetchSuggestedMessages}
-            className='my-4'
+            className='my-4 mx-auto sm:mx-0'
             disabled={isSuggestLoading}>
             Suggest Messages
           </Button>
@@ -167,7 +169,7 @@ const SendMessage = () => {
                 <Button
                   key={index}
                   variant="outline"
-                  className="mb-2"
+                  className="mb-2 whitespace-normal break-words text-left p-4"
                   onClick={() => handleMessageClick(message)}
                 >
                   {message}
@@ -176,7 +178,14 @@ const SendMessage = () => {
             )}
           </CardContent>
         </Card>
+      </div>
 
+      <Separator className="my-6" />
+      <div className="text-center">
+        <div className="mb-4">Get Your Message Board</div>
+        <Link href={'/sign-up'}>
+          <Button>Create Your Account</Button>
+        </Link>
       </div>
     </div>
   )
