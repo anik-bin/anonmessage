@@ -52,7 +52,7 @@ export default function LandingPage() {
               <div className="text-blue-600 text-2xl mb-4">🎯</div>
               <h3 className="text-xl font-semibold mb-2">Perfect for Any Occasion</h3>
               <p className="text-gray-600">
-                Whether it's feedback, compliments, or fun messages, Mystery Message is the perfect platform.
+                Whether it&apos;s feedback, compliments, or fun messages, Mystery Message is the perfect platform.
               </p>
             </div>
           </div>
